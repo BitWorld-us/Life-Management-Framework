@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">LMF for Android</string>
+    <string name="app_name">LMF</string>
+    <string name="connect_btn">Connect</string>
+    <string name="connectinstructions">You need to connect this app to your Kynetx account. Please scan a configuration barcode.</string>
+    <string name="reset">Reset Configuration</string>
+    <string name="active">Active</string>
+    <string name="inactive">Disabled</string>
+    <string name="configureinstructions">Select the appropriate options.</string>
+    <string name="proper_title">Life Management Framework</string>
+    <string name="cat_0">Weight</string>
+    <string name="cat_1">Dietary (food and supplements)</string>
+    <string name="cat_2">Activity Level</string>
+    <string name="cat_3">Sleep (or lack thereof)</string>
+    <string name="pref_title">Personal Settings</string>
+    <string name="days_bet">Days between weighings</string>
+    <string name="weight_goal">Goal weight</string>
+    <string name="weight_goal_date">Goal date</string>
+    <string name="cal_in">Calorie intake</string>
+    <string name="mod_min">Minutes - moderate</string>
+    <string name="vig_min">Minutes - vigorous</string>
+    <string name="step_goal">Steps per day goal</string>
+    <string name="bed_time">Normal bedtime</string>
+    <string name="target_sleep">Target hours of sleep</string>
+    <string name="x1">1</string>
+    <string name="x150">150</string>
+    <string name="x1250">1250</string>
+    <string name="x8">8</string>
+    <string name="x60">60</string>
+    <string name="x9000">9000</string>
+	<string name="grabZeo">Grab my sleep data</string>
+    <string name="avgZQlbl">Average Z-score</string>
+    <string name="threeDayAvgLbl">Average last 3 days    </string>
+</resources>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableLayoutConfig"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:stretchColumns="1,2,3,4" >
+
+    <TableRow
+        android:id="@+id/tableRow0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/preferences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pref_title"
+            android:gravity="center"
+            android:textSize="16dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/weightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_0"
+            android:gravity="left"
+            android:textSize="14dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+         <TextView android:id="@+id/q1_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/days_bet"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:progress="1"
+            android:max="14"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/daysBetween"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x1"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+       </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/q2_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weight_goal"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:progress="150"
+            android:max="300"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/weightGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x150"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+    </TableRow>
+        
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/dietLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_1"
+            android:gravity="left"
+            android:textSize="14dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/q4_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cal_in"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_calIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:progress="1250"
+            android:max="5000"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/caloriesIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x1250"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/actLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_2"
+            android:gravity="left"
+            android:textSize="14dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/q5_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mod_min"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_modAct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:progress="60"
+            android:max="1080"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/minModAct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x60"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/q6_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vig_min"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_vigAct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:progress="60"
+            android:max="1080"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/minVigAct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x60"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/q7_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/step_goal"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:progress="9000"
+            android:max="30000"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/stepGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x9000"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/sleepLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_3"
+            android:gravity="left"
+            android:textSize="14dp">
+		</TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView android:id="@+id/q9_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/target_sleep"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+        <SeekBar android:id="@+id/sb_sleep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="3"
+            android:progress="8"
+            android:max="12"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+		</SeekBar>
+        <TextView android:id="@+id/sleepGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="@string/x8"
+            android:gravity="left"
+            android:textSize="12dp">
+		</TextView>
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRow14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <Button
+        	android:id="@+id/save"
+       		android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@android:string/ok" />
+        <Button
+        	android:id="@+id/cancel"
+       		android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@android:string/cancel" />
+        </TableRow>
+    
+</TableLayout>

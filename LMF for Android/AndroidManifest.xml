@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="us.bitworld.lmf.andriod"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="14"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+<uses-permission android:name="android.permission.STATUS_BAR"/>
+<uses-permission android:name="android.permission.WRITE_GSERVICES"/>
+<uses-permission android:name="com.myzeo.permission.READ_SLEEP_RECORDS"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_CALENDAR"/>
+<uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
+<uses-permission android:name="android.permission.READ_SMS"></uses-permission>
+
+    <application
+        android:icon="@drawable/bitworld_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".LMFforAndroid"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Connect"  android:label="@string/app_name"></activity>
+        <activity android:name=".Settings"></activity>
+        <activity android:name=".ZeoSleep"></activity>
+        <service android:name="EventService"></service>
+        <receiver android:name=".EventServiceAutoStart"
+			android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
+			</intent-filter>
+		</receiver>
+        <activity android:name=".Settings"></activity>
+        <activity android:name=".ZeoSleep"></activity>
+    </application>
+
+</manifest>
