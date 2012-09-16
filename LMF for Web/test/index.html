@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>bitWorld - Life Management Framework</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">  
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">  
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+ 
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div id=content">
+    	<div class="navbar navbar-fixed-top">
+      	<div class="navbar-inner">
+        	<div class="container">
+          	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+          	</a>
+          	<a class="brand" href="#!/"><img src="http://www.bitworld.us/uploads/images/icons/BitWorld-icon-36x36.png" alt="" width="36" height="36" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Life Management Framework</a>
+          	<div class="nav-collapse">
+            	<ul class="nav">
+              		<li id="navHome"><a href="#!/"><i class="icon-home icon-white"></i> Home</a></li>
+                	<li id="navAbout"><a href="#!/about"><i class="icon-info-sign icon-white"></i> About</a></li>
+                	<li id="navLogin" class="active"><a href="#!/login"><i class="icon-user icon-white"></i> Login</a></li>
+              		<li id="navGoals" style="display:none;"><a href="#!/goals"><i class="icon-asterisk icon-white"></i> Goals</a></li>
+              		<li id="navInterv" style="display:none;"><a href="#!/interv"><i class="icon-list-alt icon-white"></i> Actions</a></li>
+              		<li id="navDevices" style="display:none;"><a href="#!/devices"><i class="icon-screenshot icon-white"></i> Devices</a></li>
+              		<li id="navData" style="display:none;"><a href="#!/data"><i class="icon-signal icon-white"></i> Progress</a></li>
+              		<li id="navManual" style="display:none;"><a href="#!/manual"><i class="icon-pencil icon-white"></i> Manual Entry</a></li>
+              		<li id="navQR" style="display:none;"><a href="#!/app"><i class="icon-qrcode icon-white"></i> App</a></li>
+                	<li id="navLogout" style="display:none;"><a href="#!/logout"><i class="icon-remove icon-white"></i> Logout</a></li>
+              		<li id="spacerMenu">&nbsp;</li>
+                	<li id="navProfile" style="display:none;"><a href="#!/profile"><i class="icon-user icon-white"></i> Profile</a></li> 
+               		<div id="loggedAs"><li></li></div>
+            	</ul>
+          	</div><!--/.nav-collapse -->
+        	</div>
+      	</div>
+    </div>
+
+    <div class="container">
+    
+		<div id="modalSpinner" class="modal">
+			<div class="modal-body"><img src="img/slow5.gif"></div>
+		</div>
+
+		<!-- Home  ============================================ -->
+  		<section id="sectionHome" class="viewPanel" style="display:block;">
+			<div class="page-header">
+ 				 <h2>Welcome</h2>
+    		</div>
+					
+			<div class="row">
+				<div class="span6">
+					<h2>Life Management</h2>
+					<p>Phase One: Sleep Management</p>
+  				</div>
+  			</div>
+		</section> <!-- #sectionHome -->
+
+		<!-- Login  ============================================ -->
+  		<section id="sectionLogin" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class = "row">
+				<div class="span6">
+               		<form id="kyLogin" class="well form-inline">
+				  		<input type="text" name="email" class="input-medium" placeholder="Email address"></input>
+				  		<input type="password" name="password" class="input-medium" placeholder="Password"></input>
+<!--  					  		<label class="checkbox"> 
+				  			<input type="checkbox" name="saveMe"> Remember me </input>
+				  		</label>
+-->					  		&nbsp;&nbsp;
+						<button type="submit" data-dismiss="modal" class="btn btn-primary" name="login">Sign in</button>
+				  		&nbsp;&nbsp;
+<!-- 					  		<button type="submit" data-dismiss="modal" class="btn" name="create">Create account</button>
+-->     
+         			</form>	
+             		<h5>New user?</h5>
+					<p><a href="#!/create">Click here to create a new account.</a></p>
+             	</div>	
+			</div>
+    	</section><!-- #sectionLogin -->
+					
+		<!-- CreateAccount  ============================================ -->
+  		<section id="sectionCreate" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class = "row">
+				<div class="span6">
+               		<form id="kyCreate" class="well form-inline">
+				  		<input type="text" name="email" class="input-medium" placeholder="Email address"></input>
+				  		<input type="password" name="password" class="input-medium" placeholder="Password"></input>
+<!-- 
+ 				  		<label class="checkbox"> 
+				  			<input type="checkbox" name="saveMe"> Remember me </input>
+				  		</label>
+-->
+				  		&nbsp;&nbsp;
+						<button type="submit" data-dismiss="modal" class="btn btn-primary" name="login">Sign in</button>
+				  		&nbsp;&nbsp;
+<!--  				  		<button type="submit" data-dismiss="modal" class="btn" name="create">Create account</button>
+-->
+           			</form>	
+           			<h5>Already have an account?</h5>
+					<p><a href="#!/login">Click here to log in.</a></p>
+           		</div>	
+    		</div> 
+    	</section><!-- #sectionLogin -->
+					
+		<!-- Actions ============================================ -->
+  		<section id="sectionActions" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class="row">
+				<div class="span6">
+					<h2>Actions - Messages</h2>
+					<form id="formActions" class="well form-inline">
+						<h3>Weight</h3>
+						<label class="span2">Positive message </label><input type="text" name="posWeight" class="span3" placeholder="Pat on the back"></input><br />
+						<label class="span2">Reminder to weigh </label><input type="text" name="remindWeigh" class="span3" placeholder="Reminder"></input><br />
+						<label class="span2">Encouragement message </label><input type="text" name="encourgWeigh" class="span3" placeholder="Encouraging words"></input><br />
+						<br />
+						<h3>Dietary - food and supplements</h3>
+						<label class="span2">Positive message </label><input type="text" name="posFood" class="span3" placeholder="Pat on the back"></input><br />
+						<label class="span2">Reminder to take vitamins </label><input type="text" name="remindVitamin" class="span3" placeholder="Reminder"></input><br />
+						<label class="span2">Encouragement message </label><input type="text" name="encourgFood" class="span3" placeholder="Encouraging words"></input><br />
+						<br />
+						<h3>Activity</h3>
+						<label class="span2">Positive message </label><input type="text" name="posAct" class="span3" placeholder="Pat on the back"></input><br />
+						<label class="span2">Reminder to take vitamins </label><input type="text" name="remindAct" class="span3" placeholder="Reminder"></input><br />
+						<label class="span2">Encouragement message </label><input type="text" name="encourgAct" class="span3" placeholder="Encouraging words"></input><br />
+						<br />
+						<h3>Sleep</h3>
+						<label class="span2">Positive message </label><input type="text" name="posSleep" class="span3" placeholder="Pat on the back"></input><br />
+						<label class="span2">Rescheduling message </label><input type="text" name="reschedSleep" class="span3" placeholder="Rescheduling bedtime message"></input><br />
+						<label class="span2">Encouragement message </label><input type="text" name="encourgSleep" class="span3" placeholder="Encouraging words"></input><br />
+						<br />
+						<label class="span3"></label>
+           				<button type="submit" value="Submit" class="btn btn-primary">Save changes</button>
+           				<button class="btn" value="Cancel" >Cancel</button>
+					</form>
+  				</div>
+			</div>
+	   	</section> <!-- #sectionActions -->
+
+		<!-- Goals ============================================ -->
+  		<section id="sectionGoals" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class="row">
+				<div class="span6">
+					<h2>Goals</h2>
+					<form id="formGoals" class="well form-inline">
+						<h3>Weight</h3>
+						<label class="span2">Days between weighings </label><input type="text" name="daysBetweenWeights" class="span2" placeholder="Days between"></input><br />
+						<label class="span2">Goal weight </label><input type="text" name="goalWeight" class="span2" placeholder="Goal"></input><br />
+						<label class="span2">Goal date </label><input type="date" name="goalWeightDate" class="span2" placeholder="MM-DD-YYYY"></input><br />
+				        <br />
+						<h3>Dietary - food and supplements</h3>
+						<label class="span2">Calorie intake </label><input type="text" name="caloriesIn" class="span2" placeholder="Calories allowed"></input><br />
+						<br />
+						<h3>Activity level</h3>
+						<label class="span2">Minutes - moderate: </label><input type="text" name="modActMin" class="span2" placeholder="Minutes moderate"></input><br />
+						<label class="span2">Minutes - vigorous: </label><input type="text" name="vigActMin" class="span2" placeholder="Minutes vigorous"></input><br />
+						<label class="span2">Steps per day goal </label><input type="text" name="stepGoal" class="span2" placeholder="Steps goal"></input><br />
+						<br />
+						<h3>Sleep (or lack thereof)</h3>
+						<label class="span2">Normal wake time </label><input type="text" name="waketime" class="span2" placeholder="HH:MM"></input><br />
+						<label class="span2">Target hours of sleep </label><input type="text" name="targetSleep" class="span2" placeholder="Hours of sleep"></input><br />
+						<label class="span3"></label>
+            			<button type="submit" value="Submit" class="btn btn-primary">Save changes</button>
+            			<button class="btn" value="Cancel" >Cancel</button>
+					</form>
+  				</div>				
+			</div>
+ 		</section> <!-- #sectionGoals -->
+
+		<!-- About ============================================ -->
+  		<section id="sectionAbout" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class="row">
+				<div class="span6">
+					<h2>This is bitWorld</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac augue tortor, eget porttitor tortor. Vestibulum adipiscing, tellus a fermentum fringilla, sem arcu sollicitudin odio, ac elementum neque eros ac nisl. Donec eget purus massa, at tristique massa. Morbi pretium ligula quis sapien euismod ut placerat nulla ultrices. Etiam tincidunt euismod quam, id vestibulum magna posuere a. Nulla facilisi. Vivamus sit amet diam quis lacus accumsan venenatis. Pellentesque sapien ipsum, ullamcorper vitae vestibulum id, posuere auctor turpis. Phasellus aliquam, arcu eu imperdiet fringilla, nisi massa rhoncus tellus, at vehicula magna lacus sit amet massa. Suspendisse hendrerit justo nisl.</p>
+				</div>
+				<div class="span6">
+					<h2>This is the LMF</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac augue tortor, eget porttitor tortor. Vestibulum adipiscing, tellus a fermentum fringilla, sem arcu sollicitudin odio, ac elementum neque eros ac nisl. Donec eget purus massa, at tristique massa. Morbi pretium ligula quis sapien euismod ut placerat nulla ultrices. Etiam tincidunt euismod quam, id vestibulum magna posuere a. Nulla facilisi. Vivamus sit amet diam quis lacus accumsan venenatis. Pellentesque sapien ipsum, ullamcorper vitae vestibulum id, posuere auctor turpis. Phasellus aliquam, arcu eu imperdiet fringilla, nisi massa rhoncus tellus, at vehicula magna lacus sit amet massa. Suspendisse hendrerit justo nisl.</p>
+				</div>
+			</div>
+
+	<!-- fiddling with lists -->
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li id="sideNavApps" class="nav-header">Your Applications</li>
+              <li id="sideNavChannels" class="nav-header">Your Channels</li>
+            </ul>
+          </div><!--/.well -->
+
+
+		</section> <!-- #sectionAbout -->
+
+		<!-- Section: Devices
+			============================================ -->
+  		<section id="sectionDevices" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class="row">
+				<div class="span6">
+					<h2>Devices</h2>
+					<form id="formDevices" class="well form-inline">
+          				<div class="control-group">        						
+            				<label class="control-label" for="devices"><strong>Sensors</strong></label>
+            				<div class="controls"> 
+            					<label class="checkbox">
+                					<input type="checkbox" id="devices" value="noDevice" >
+                						Manual input &mdash; select this if you aren't using a sensor device 
+              					</label><br />
+              					<label class="checkbox">
+                					<input type="checkbox" id="devices" value="zeo" > Zeo mobile or bedside 
+              					</label><br />
+              					<label class="checkbox">
+                					<input type="checkbox" id="devices" value="bodymedia" > BodyMedia
+              					</label><br />
+               					<label class="checkbox">
+                					<input type="checkbox" id="devices" value="fitbit" > FitBit
+              					</label><br />
+               					<label class="checkbox">
+                					<input type="checkbox" id="devices" value="withings" > Withings
+              					</label><br />
+              					<p class="help-block"><em>You can select more than one sensor type</em></p>
+              				</div>
+           				</div>
+          				<button type="submit" value="Submit" class="btn btn-primary">Save changes</button>
+            			<button class="btn" value="Cancel" >Cancel</button>
+ 					</form>
+  				</div>
+			</div>
+	   </section> 
+	   <!-- #sectionDevices -->
+	   
+		<!-- SleepTracking ============================================ -->
+  		<section id="sectionSleepTracking" class="viewPanel" style="display:none;">
+  			<div class="page-header">
+    			<h2>Tracking Sufficient Sleep</h2>
+    		</div>
+			<div class="row">
+				<div class="span6">
+					<h2>Sleep Sensors</h2>
+					<label class="checkbox">
+						<input type="checkbox" name="manual">Manual input</input>
+					</label>
+  				</div>
+				<div class="span6">
+					<h2>Prompt</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac augue tortor, eget porttitor tortor. Vestibulum adipiscing, tellus a fermentum fringilla, sem arcu sollicitudin odio, ac elementum neque eros ac nisl. Donec eget purus massa, at tristique massa. Morbi pretium ligula quis sapien euismod ut placerat nulla ultrices. Etiam tincidunt euismod quam, id vestibulum magna posuere a. Nulla facilisi. Vivamus sit amet diam quis lacus accumsan venenatis. Pellentesque sapien ipsum, ullamcorper vitae vestibulum id, posuere auctor turpis. Phasellus aliquam, arcu eu imperdiet fringilla, nisi massa rhoncus tellus, at vehicula magna lacus sit amet massa. Suspendisse hendrerit justo nisl.</p>
+  				</div>
+			</div>
+		</section> <!-- #sectionSleepTracking -->
+
+		<!-- Contact ============================================ -->
+  		<section id="sectionContact" class="viewPanel" style="display:none;">
+  			<div class="page-header"></div>
+			<div class="row">
+				<div class="span6">
+					<h2>Customer Support</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+  				</div>
+				<div class="span6">
+					<h2>Developer Support</h2>
+					<p>Integer ac augue tortor, eget porttitor tortor. </p>
+  				</div>
+			</div>
+	   	</section> <!-- #sectionContact -->
+
+		<!-- QRcode  ============================================ -->
+  		<section id="sectionQRcode" class="viewPanel" style="display:none;">
+			<div class="page-header">
+ 				 <h2>LMF for Droid</h2>
+ 				 <p>Install the app on your phone.</p>
+    		</div>
+					
+			<div class="row">
+				<div class="span6">
+					<h2>1. Download the app</h2>
+					<p><em>link will be here with icon</em></p>
+  				</div>
+  			</div>
+  			<div class="row">
+  				<div class="span6">
+					<h2>2. Scan this code when prompted by the app</h2>
+  					<div align="center"><div id="qrImg"></div></div>
+  				</div>
+  			</div>
+		</section> <!-- #sectionHome -->
+
+		
+      <p></p><hr>
+      <footer>
+        <p><a href="#!/about">About</a> &nbsp;|&nbsp; 
+        <a href="#!/contact">Contact</a> &nbsp;|&nbsp;
+        &copy <a href="http://www.bitWorld.com">bitWorld</a> 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--    <script type="text/javascript">
+       var d=document;
+       var s=d.createElement('script');
+       // Development Site Tag
+       s.text='KOBJ_configs=typeof(KOBJ_configs)=="undefined"?[]:KOBJ_configs;KOBJ_configs.push({"a169x569:kynetx_app_version":"dev","rids":["a1923x21"]});';
+       // Production Site Tag
+       // s.text='KOBJ_configs=typeof(KOBJ_configs)=="undefined"?[]:KOBJ_configs;KOBJ_configs.push({"rids":["a1923x21"]});';
+       d.body.appendChild(s);
+       var l=d.createElement('script');
+       l.src='http://init.kobj.net/js/shared/kobj-static.js';
+       d.body.appendChild(l);
+-->
+		<script>KOBJ_config= {"a1923x21:kynetx_app_version":"dev","rids":["a1923x21"]};</script>
+		<script src="http://init.kobj.net/js/shared/kobj-static.js"></script>
+
+    </script>
+  </div>
+  </body>
+</html>
