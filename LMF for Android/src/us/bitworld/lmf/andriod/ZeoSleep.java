@@ -1,14 +1,8 @@
 package us.bitworld.lmf.andriod;
 
-//import java.io.File;
-//import java.io.FileOutputStream;
-import java.io.IOException;
-//import java.io.OutputStreamWriter;
-//import java.io.Writer;
-//import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-//import java.util.List;
+import java.io.IOException;
 import java.util.TimeZone;
 
 import org.apache.http.HttpResponse;
@@ -16,7 +10,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
+//import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -26,6 +20,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,13 +31,9 @@ import android.provider.CalendarContract.Events;
 
 import com.myzeo.android.api.data.ZeoDataContract.SleepRecord;
 
-//import android.os.Bundle;
-
 public class ZeoSleep extends Activity {
-	
-    /** String that will contain the complete CSV gathered from the Zeo data provider. */
-    private String mySleepCsv;
-    private JSONObject jSleepRecord = new JSONObject();
+    private String mySleep;
+    //private JSONObject jSleepRecord = new JSONObject();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,19 +46,16 @@ public class ZeoSleep extends Activity {
             public void onClick(View view) {
                 TextView csvSleep = (TextView) findViewById(R.id.csvSleep);
                 
-                //restricted to build only one
-                mySleepCsv = buildCsv(1);
-                if (mySleepCsv != null) {
-                	csvSleep.setText("Sleep records found!");
-                }
-            	if (mySleepCsv == null || mySleepCsv.equals("")) {
-                    // Warn user that there is no CSV data and abort prematurely.
-                    Toast.makeText(ZeoSleep.this,
-                                   "Sorry, there is no CSV data to send.",
-                                   Toast.LENGTH_SHORT).show();
+                mySleep = buildCsv();
+            	if (mySleep == null || mySleep.equals("")) {
+                    // Warn user that there is no data and abort prematurely.
+                	csvSleep.setText(mySleep);
+                    Toast.makeText(ZeoSleep.this, "Sorry, there is no data to send.", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+                	csvSleep.setText(mySleep);                	
                 }
-
+/*
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 final long now = System.currentTimeMillis();
                 final String currentDateTime =
@@ -74,39 +64,25 @@ public class ZeoSleep extends Activity {
                                              DateUtils.FORMAT_SHOW_DATE |
                                              DateUtils.FORMAT_SHOW_TIME |
                                              DateUtils.FORMAT_SHOW_YEAR);
-                // Add the data header
-                intent.putExtra(Intent.EXTRA_SUBJECT, "My Zeo sleep data as of " +
-                                currentDateTime + ".");
+                
+                intent.putExtra(Intent.EXTRA_SUBJECT, "My Zeo sleep data as of " + currentDateTime + ".");
                 // Add the body text
                 StringBuilder builder = new StringBuilder();
-                //builder.append("Attached is my Zeo sleep data in CSV form as of: " + currentDateTime + ".\n\n");
-                //builder.append(mySleepCsv + " as of: " + currentDateTime + ".\n\n");
-                
+                builder.append(mySleep + "\n");
                 builder.append("My average ZQ is " + getAvgZQ() + ".\n\n");
                 //builder.append("My normal bedtime is " + getRunBed() + ".\n\n");
-                
-                //builder.append("This is the JSON object \n" + jSleepRecord.toString()+ ".\n\n");
-           
-                // NOTE, uncomment the following to allow sleepCSV data to be included in the email
-                //builder.append(mySleepCsv);
-                /*
 
                 intent.putExtra(Intent.EXTRA_TEXT, builder.toString());
                 intent.setType("text/plain");
 
-                // Append file with sleep data in it.
-                final String filename = "sleep_data_" + DateFormat.format("yyyy-MM-dd'T'kk-mm-ss", now) + ".csv";
-                File csvFile = writeCsvFile(mySleepCsv, filename);
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(csvFile));
-                
-                //startActivity(Intent.createChooser(intent, "Share Sleep CSV"));
-                 */
                 startActivity(Intent.createChooser(intent, "Share Sleep Data"));
-                
-                
+*/
+                //finish();
+
             }
         });    
     }
+    
 	private Integer getAvgZQ() {
     	String[] selectedColumns = new String[] {
             	SleepRecord.SLEEP_EPISODE_ID,
@@ -116,8 +92,7 @@ public class ZeoSleep extends Activity {
                 selectedColumns, null, null, null);
         if (zscores == null) {
             Log.w(LMFforAndroid.tag, "Cursor was null; something is wrong; perhaps Zeo not installed.");
-            Toast.makeText(this, "Unable to access Zeo data provider, is Zeo installed?",
-                           Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Unable to access data, is Zeo installed?", Toast.LENGTH_LONG).show();
             return null;
         }
         int totZQ = 0;
@@ -134,8 +109,7 @@ public class ZeoSleep extends Activity {
             } while (zscores.moveToNext());
         } else {
             Log.w(LMFforAndroid.tag, "No sleep records found.");
-            Toast.makeText(this, "No sleep records found in the provider.",
-                           Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No sleep records found in the provider.", Toast.LENGTH_SHORT).show();
         }
         //get last three
         zscores.moveToPosition(zscores.getCount() - 3);
@@ -158,7 +132,7 @@ public class ZeoSleep extends Activity {
         threeAvg.setText(String.valueOf(avgThree));    
         
         String avg = "Average Z-score is " + avgZQ + " calculated over " + countZQ + " nights\nLast three days average " + avgThree;
-        Toast.makeText(this, avg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, avg, Toast.LENGTH_SHORT).show();
 
         //put calendar event on
         Intent intent = new Intent(Intent.ACTION_INSERT);
@@ -188,10 +162,8 @@ public class ZeoSleep extends Activity {
         dateCal.set(Calendar.MINUTE, bedtimeMins);
         dateCal.set(Calendar.SECOND, 0);
         dateCal.set(Calendar.MILLISECOND, 0);
-     	intent.putExtra(Events.DTSTART,
-     			dateCal.getTimeInMillis());
-        intent.putExtra(Events.DTEND,
-        		dateCal.getTimeInMillis());
+     	intent.putExtra(Events.DTSTART, dateCal.getTimeInMillis());
+        intent.putExtra(Events.DTEND, dateCal.getTimeInMillis());
         intent.putExtra(Events.HAS_ALARM, 1);
         
 /*
@@ -213,17 +185,17 @@ public class ZeoSleep extends Activity {
         intent.putExtra(Events.VISIBLE, Events.ACCESS_PRIVATE);
         intent.putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
         
+        //put it on the calendar
         startActivity(intent);
         
         //end of calculating
         
         //get to the PEN
         processSleepData(avgZQ, countZQ, avgThree);
-        return avgZQ;
-		
+        return avgZQ;		
 	}
     
-    private String buildCsv(int times) {
+    private String buildCsv() {
     	
     	String[] projection = new String[] {
             	SleepRecord.SLEEP_EPISODE_ID,
@@ -245,18 +217,8 @@ public class ZeoSleep extends Activity {
                 SleepRecord.BASE_HYPNOGRAM
             };
     	
-    	//alter so most recent 3 are only ones pulled?
-        final Cursor cursor = getContentResolver().query(SleepRecord.CONTENT_URI,
-                projection, null, null, null);
-        if (cursor == null) {
-            Log.w(LMFforAndroid.tag, "Cursor was null; something is wrong; perhaps Zeo not installed.");
-            Toast.makeText(this, "Unable to access Zeo data provider, is Zeo installed on this phone?",
-                           Toast.LENGTH_LONG).show();
-            return null;
-        }
-        
-        //build JSON structure(s) to raise into the personal cloud
         //phone stores in db; web returns JSON object
+/*
         final JSONObject jSleep;
         jSleep = new JSONObject();
         final JSONObject jBedTime;
@@ -269,133 +231,121 @@ public class ZeoSleep extends Activity {
         jGraphStart = new JSONObject();
         final JSONObject jRecord;
         jRecord = new JSONObject();
-
-        StringBuilder builder = new StringBuilder();
-    	Calendar myDay = Calendar.getInstance();
+*/
     	
-    	int sleepAmt;
-    	int totSleep;
-    	double sleepPerc;
-    	//int times = 0;
+        String builder = new String();
+//    	Calendar myDay = Calendar.getInstance();
+//    	int sleepAmt;
+//    	int totSleep;
+//    	double sleepPerc;
+     	//int times = 0;
     	
-    	//really want the last one
-        if (cursor.moveToFirst()) {
-    		myDay.setTimeZone(TimeZone.getTimeZone(cursor.getString(cursor.getColumnIndex(SleepRecord.TIMEZONE))));
-
-    		// Write the header
-    		/*
-            String delim = "";
-            for (String column : projection) {
-                builder.append(delim).append(column);
-                delim = ",";
-            }
-            builder.append("\n");
-			*/
-
-            do {
-            	//build the JSON structures
-            	try {      	
+    	//alter so most recent 3 are only ones pulled?
+        final Cursor cursor = getContentResolver().query(SleepRecord.CONTENT_URI, projection, null, null, null);
+        if (cursor == null) {
+            Log.w(LMFforAndroid.tag, "Cursor was null; something is wrong; perhaps Zeo not installed.");
+            Toast.makeText(this, "Unable to access Zeo data, is Zeo installed?", Toast.LENGTH_LONG).show();
+            return null;
+        }
+           	
+        if (cursor.moveToLast()) {
+        	builder = "Last night you scored " + cursor.getInt(cursor.getColumnIndex(SleepRecord.ZQ_SCORE)) + "\n";
+        	//builder = builder + "and your bedTime was " + cursor.getLong(cursor.getColumnIndex(SleepRecord.START_OF_NIGHT));
+/*
+    		//myDay.setTimeZone(TimeZone.getTimeZone(cursor.getString(cursor.getColumnIndex(SleepRecord.TIMEZONE))));
+            //build the JSON structures
+            try {      	
             		//bedTime
-            		myDay.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(SleepRecord.START_OF_NIGHT)));
-            		jBedTime.put("day", myDay.get(Calendar.DATE));
-            		jBedTime.put("hour", myDay.get(Calendar.HOUR_OF_DAY));
-            		jBedTime.put("minute", myDay.get(Calendar.MINUTE));
-            		jBedTime.put("month", myDay.get(Calendar.MONTH));
-            		jBedTime.put("second", myDay.get(Calendar.SECOND));
-            		jBedTime.put("year", myDay.get(Calendar.YEAR));
-            		jSleep.put("bedTime", jBedTime);
+            		//myDay.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(SleepRecord.START_OF_NIGHT)));
+            		//jBedTime.put("day", myDay.get(Calendar.DATE));
+            		//jBedTime.put("hour", myDay.get(Calendar.HOUR_OF_DAY));
+            		//jBedTime.put("minute", myDay.get(Calendar.MINUTE));
+            		//jBedTime.put("month", myDay.get(Calendar.MONTH));
+            		//jBedTime.put("second", myDay.get(Calendar.SECOND));
+            		//jBedTime.put("year", myDay.get(Calendar.YEAR));
+            		//jBedTime.put("startOfNight", cursor.getLong(cursor.getColumnIndex(SleepRecord.START_OF_NIGHT)));
+            		//jSleep.put("bedTime", jBedTime);
+            	
+            		jSleep.put("bedTime", cursor.getLong(cursor.getColumnIndex(SleepRecord.START_OF_NIGHT)));
+            		
             		//startDate
-            		jStartDate.put("day", myDay.get(Calendar.DATE));
-            		jStartDate.put("month", myDay.get(Calendar.MONTH));
-            		jStartDate.put("year", myDay.get(Calendar.YEAR));
-            		jSleep.put("startDate", jStartDate);
-                
+            		//jStartDate.put("day", myDay.get(Calendar.DATE));
+            		//jStartDate.put("month", myDay.get(Calendar.MONTH));
+            		//jStartDate.put("year", myDay.get(Calendar.YEAR));
+            		//jSleep.put("startDate", jStartDate);
+             
             		//graphStart - only when pulling from web
-            		jGraphStart.put("day", myDay.get(Calendar.DATE));
-            		jGraphStart.put("hour", myDay.get(Calendar.HOUR_OF_DAY));
-            		jGraphStart.put("minute", myDay.get(Calendar.MINUTE));
-            		jGraphStart.put("month", myDay.get(Calendar.MONTH));
-            		jGraphStart.put("second", myDay.get(Calendar.SECOND));
-            		jGraphStart.put("year", myDay.get(Calendar.YEAR));
-                	jSleep.put("sleepGraphStartTime", jGraphStart);
-     
+            		//jGraphStart.put("day", myDay.get(Calendar.DATE));
+            		//jGraphStart.put("hour", myDay.get(Calendar.HOUR_OF_DAY));
+            		//jGraphStart.put("minute", myDay.get(Calendar.MINUTE));
+            		//jGraphStart.put("month", myDay.get(Calendar.MONTH));
+            		//jGraphStart.put("second", myDay.get(Calendar.SECOND));
+            		//jGraphStart.put("year", myDay.get(Calendar.YEAR));
+                	//jSleep.put("sleepGraphStartTime", jGraphStart);
+   
             		//riseTime
-            		myDay.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(SleepRecord.END_OF_NIGHT)));
-            		jRiseTime.put("day", myDay.get(Calendar.DATE));
-            		jRiseTime.put("hour", myDay.get(Calendar.HOUR_OF_DAY));
-            		jRiseTime.put("minute", myDay.get(Calendar.MINUTE));
-            		jRiseTime.put("month", myDay.get(Calendar.MONTH));
-            		jRiseTime.put("second", myDay.get(Calendar.SECOND));
-            		jRiseTime.put("year", myDay.get(Calendar.YEAR));
-
+            		//myDay.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(SleepRecord.END_OF_NIGHT)));
+            		//jRiseTime.put("endOfNight", cursor.getLong(cursor.getColumnIndex(SleepRecord.END_OF_NIGHT)));
+            		//jRiseTime.put("day", myDay.get(Calendar.DATE));
+            		//jRiseTime.put("hour", myDay.get(Calendar.HOUR_OF_DAY));
+            		//jRiseTime.put("minute", myDay.get(Calendar.MINUTE));
+            		//jRiseTime.put("month", myDay.get(Calendar.MONTH));
+            		//jRiseTime.put("second", myDay.get(Calendar.SECOND));
+            		//jRiseTime.put("year", myDay.get(Calendar.YEAR));
+            		//jSleep.put("riseTime", jRiseTime);
+            	
+            		jSleep.put("endOfNight", cursor.getLong(cursor.getColumnIndex(SleepRecord.END_OF_NIGHT)));
+            		
             		jSleep.put("awakenings", cursor.getInt(cursor.getColumnIndex(SleepRecord.AWAKENINGS)));
+            		
             		//jSleep.put("awakeningsZqPoints", 0);  //only from web
             		//jSleep.put("grouping", "DAILY");  //only from web
             		//jSleep.put("morningFeel", 0);  //only from web
-            		jSleep.put("riseTime", jRiseTime);
+            		//jSleep.put("timeInDeepZqPoints", 0);  //only from web
+            		//jSleep.put("timeInRemZqPoints", 0);  //only from web
+            		//jSleep.put("timeInWakeZqPoints", 0);  //only from web
+            		//jSleep.put("totalZZqPoints", 0);  //only from web
+            		
             		totSleep = cursor.getInt(cursor.getColumnIndex(SleepRecord.TOTAL_Z));
+           		
             		sleepAmt = cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_DEEP));
             		sleepPerc = Math.round((sleepAmt/totSleep)*100.0);
             		jSleep.put("timeInDeep", sleepAmt); 
             		jSleep.put("timeInDeepPercentage", sleepPerc);
-            		//jSleep.put("timeInDeepZqPoints", 0);  //only from web
+            		
             		sleepAmt = cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_LIGHT));
             		sleepPerc = Math.round((sleepAmt/totSleep)*100.0);
             		jSleep.put("timeInLight", sleepAmt);
             		jSleep.put("timeInLightPercentage", sleepPerc);
+            		
             		sleepAmt = cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_REM));
             		sleepPerc = Math.round((sleepAmt/totSleep)*100.0);
             		jSleep.put("timeInRem", sleepAmt);
             		jSleep.put("timeInRemPercentage", sleepPerc);
-            		//jSleep.put("timeInRemZqPoints", 0);  //only from web
+            		
             		sleepAmt = cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_WAKE));
             		sleepPerc = Math.round((sleepAmt/totSleep)*100.0);
             		jSleep.put("timeInWake", sleepAmt);
             		jSleep.put("timeInWakePercentage", sleepPerc);
-            		//jSleep.put("timeInWakeZqPoints", 0);  //only from web
+            		
             		jSleep.put("timeToZ", cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_TO_Z)));
-            		jSleep.put("totalZ", cursor.getInt(cursor.getColumnIndex(SleepRecord.TOTAL_Z)));
-            		//jSleep.put("totalZZqPoints", 0);  //only from web
+            		jSleep.put("totalZ", totSleep);
             		jSleep.put("zq", cursor.getInt(cursor.getColumnIndex(SleepRecord.ZQ_SCORE)));
+            		
             		//jSleep.put("alarmReason", "NO_ALARM");  //only from web
             		//jSleep.put("alarmRingIndex", 0);  //only from web
             		//jSleep.put("dayFeel", 0);  //only from web
                 	//jSleep.put("sleepStealerScore", 0);  //only from web
                 	//jSleep.put("wakeWindowEndIndex", 0);  //only from web
                 	//jSleep.put("sleewakeWindowShowpStealerScore", 0);  //only from web
-                	//jSleep.put("wakeWindowStartIndex", 0);  //only from web
-            
-            	}
-            	catch (JSONException je) {
-            		//ignore
-            	}
-    		
-                // Begin writing data.
-            	
-                builder.append(
-                    cursor.getLong(cursor.getColumnIndex(SleepRecord.LOCALIZED_START_OF_NIGHT)) +
-                    ",");
-                builder.append(cursor.getLong(cursor.getColumnIndex(SleepRecord.START_OF_NIGHT)) +
-                               ",");
-                builder.append(cursor.getLong(cursor.getColumnIndex(SleepRecord.END_OF_NIGHT)) +
-                               ",");
-                builder.append(cursor.getString(cursor.getColumnIndex(SleepRecord.TIMEZONE)) +
-                               ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.ZQ_SCORE)) + ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.AWAKENINGS)) + ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_DEEP)) +
-                               ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_LIGHT)) +
-                               ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_REM)) + ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_IN_WAKE)) +
-                               ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.TIME_TO_Z)) + ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.TOTAL_Z)) + ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.SOURCE)) + ",");
-                builder.append(cursor.getInt(cursor.getColumnIndex(SleepRecord.END_REASON)) + ",");
-               
-
+                	//jSleep.put("wakeWindowStartIndex", 0);  //only from web           		
+            }
+            catch (JSONException je) {
+            	//ignore
+                Toast.makeText(this, "Error with the JSON", Toast.LENGTH_LONG).show();
+            }
+*/            
+/*           	
                 // Output the display hypnogram - 5 min slices
                 final byte[] displayHypnogram =
                     cursor.getBlob(cursor.getColumnIndex(SleepRecord.DISPLAY_HYPNOGRAM));
@@ -406,10 +356,9 @@ public class ZeoSleep extends Activity {
                 	}
                 	catch (JSONException je) {
                 		//ignore
+                        Toast.makeText(this, "Error with the JSON 2", Toast.LENGTH_LONG).show();
                 	}
-                    //builder.append(Byte.toString(stage));
-                }
-                //builder.append(",");
+                 }
                 
                 // Output the base hypnogram - 30 sec slices
                 final byte[] baseHypnogram =
@@ -421,93 +370,74 @@ public class ZeoSleep extends Activity {
                 	}
                 	catch (JSONException je) {
                 		//ignore
+                        Toast.makeText(this, "Error with the JSON 3", Toast.LENGTH_LONG).show();
                 	}
-                    //builder.append(Byte.toString(stage));
                 }
-                builder.append("\n");
-                
+ */  
+            
                 //add to jSleep
-                try {
-                	jRecord.put("sleep record", jSleep);
-                	jSleepRecord.put("records", jRecord);  //not really necessary
-                	processZeoData(jSleep);
-            	}
-            	catch (JSONException je) {
+            //try {
+                	//jRecord.put("sleep record", jSleep);
+                	//jSleepRecord.put("records", jRecord);  //not really necessary
+//                	processZeoData(jSleep);
+            //}
+            //catch (JSONException je) {
             		//ignore
-            	}
-            	--times;
-                //Toast.makeText(this, times + " records to be fetched " , Toast.LENGTH_SHORT).show();
-                if (times <= 0) break;
-            } while (cursor.moveToNext());
-
-        } else {
+                    //Toast.makeText(this, "Error with the JSON 4", Toast.LENGTH_LONG).show();
+            //}
+            	
+        } 
+        else {
             Log.w(LMFforAndroid.tag, "No sleep records found.");
-            Toast.makeText(this, "No sleep records found in the provider.",
-                           Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No sleep records found in the provider.", Toast.LENGTH_SHORT).show();
+            builder = "No sleep records found";
         }
+
         cursor.close();
-        return builder.toString();
-        //return "Done!";
-    }
+        return builder;
+     }
     
     @Override
     public void onResume() {
         super.onResume();
 
         TextView csvSleep = (TextView) findViewById(R.id.csvSleep);
-        mySleepCsv = buildCsv(1);
-        if (mySleepCsv != null) {
-        	csvSleep.setText("Sleep records found");
-        }
-    }
-
-    /*
-    private File writeCsvFile(String csvData, String filename) {
-        final String storageState =
-            Environment.getExternalStorageState();
-        if (!Environment.MEDIA_MOUNTED.equals(storageState) ||
-            Environment.MEDIA_MOUNTED_READ_ONLY.equals(storageState)) {
-            Toast.makeText(this, "Can not share sleep data as no external storage (SD card?) is available.",
+        
+        mySleep = buildCsv();
+    	if (mySleep == null || mySleep.equals("")) {
+            // Warn user that there is no data and abort prematurely.
+        	csvSleep.setText("No sleep records found!");
+            Toast.makeText(ZeoSleep.this,
+                           "Sorry, there is no data to send.",
                            Toast.LENGTH_SHORT).show();
-            return null;
+            return;
+        } else {
+        	csvSleep.setText(mySleep);                	
         }
+/*
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        final long now = System.currentTimeMillis();
+        final String currentDateTime =
+            DateUtils.formatDateTime(ZeoSleep.this,
+                                     now,
+                                     DateUtils.FORMAT_SHOW_DATE |
+                                     DateUtils.FORMAT_SHOW_TIME |
+                                     DateUtils.FORMAT_SHOW_YEAR);
+        // Add the data header
+        intent.putExtra(Intent.EXTRA_SUBJECT, "My Zeo sleep data as of " +
+                        currentDateTime + ".");
+        // Add the body text
+        StringBuilder builder = new StringBuilder();               
+        builder.append("My average ZQ is " + getAvgZQ() + ".\n\n");
+        //builder.append("My normal bedtime is " + getRunBed() + ".\n\n");
 
-        File saveDir =
-            new File(Environment.getExternalStorageDirectory(),
-                     "/Android/data/us.bitworld.lmf.android.sleep_to_csv");
-        saveDir.mkdirs();
-        // Attempt to store CSV data to filesystem.
-        File csvFile = new File(saveDir, filename);
+        intent.putExtra(Intent.EXTRA_TEXT, builder.toString());
+        intent.setType("text/plain");
 
-        if (csvFile == null) {
-            Toast.makeText(this, "Unable to create the csv file needed for transmission of data.", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
-        Writer writer;
-        try {
-            writer = new OutputStreamWriter(new FileOutputStream(csvFile));
-        } catch (IOException e) {
-            Toast.makeText(this, "Unable to write the csv file needed for transmission of data.",
-                           Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
-        try {
-            writer.write(csvData);
-        } catch (IOException e) {
-            Toast.makeText(this, "Failure to write CSV text.", Toast.LENGTH_SHORT).show();
-        }
-
-        try {
-            writer.close();
-        } catch (IOException e) {
-            Log.w(tag, "Failure to close the output stream handle.");
-        }
-
-        return csvFile;
+        startActivity(Intent.createChooser(intent, "Share Sleep Data"));
+        finish();
+*/
     }
-	*/
     
     public void processZeoData(JSONObject jSleepRecord) {
     	// Process Zeo data
@@ -534,7 +464,9 @@ public class ZeoSleep extends Activity {
     	try {
     		final SharedPreferences settings = getSharedPreferences(LMFforAndroid.PREFS_NAME, 0);
     		String signalurl = settings.getString("CID_url", "notpresent");
-    		
+            TextView csvSleep = (TextView) findViewById(R.id.csvSleep);
+            csvSleep.setText(signalurl);
+            
     		//if it isn't present need to do something
     		
     		// Create a new HttpClient and Post Header
@@ -583,4 +515,49 @@ re-end comment here
     	}
     }
 */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.mainmenu, menu);
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.reset:
+            //reset config
+        	resetConfig();
+            return true;
+        case R.id.prefs:
+            userPrefs();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+ 
+    private void userPrefs() {
+        Intent goToSettingActivity = new Intent(getApplicationContext(), Settings.class);
+        startActivity(goToSettingActivity);
+    }
+    
+    private void resetConfig(){
+    	//clear setting
+    	SharedPreferences settings = getSharedPreferences(LMFforAndroid.PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.remove("CID_url");
+		editor.commit();
+		//toast reset
+		Toast.makeText(getApplicationContext(), "Connection URL Reset", Toast.LENGTH_SHORT).show();
+		//forward to connect activity
+		Intent goToNextActivity = new Intent(getApplicationContext(), Connect.class);
+    	startActivity(goToNextActivity);
+    	finish();
+    }
+    	  
+
+
 }

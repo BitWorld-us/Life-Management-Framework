@@ -35,14 +35,6 @@ public class Connect extends Activity {
             }
         });
 
-//        final Button login = (Button) findViewById(R.id.login_btn);
-//        login.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//            	//get login information
-//                setContentView(R.layout.login);
-//            }
-//        });
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

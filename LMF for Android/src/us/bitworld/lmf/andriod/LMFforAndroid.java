@@ -7,13 +7,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+//import android.widget.ToggleButton;
 
 public class LMFforAndroid extends Activity {
 	public static final String PREFS_NAME = "LMFPrefs";
-	static final String tag = "lmf_bitworld";
+	static final String tag = "bitworld";
     /** Called when the activity is first created. */
 	
     @Override
@@ -23,20 +22,21 @@ public class LMFforAndroid extends Activity {
                
         final SharedPreferences settings = getSharedPreferences(LMFforAndroid.PREFS_NAME, 0);
         String signalurl = settings.getString("CID_url", "notpresent");
-        boolean active = settings.getBoolean("LMF_active", false);
+        //boolean active = settings.getBoolean("LMF_active", false);
 
-        //signalurl = "http://cs.kobj.net/sky/event/b38a1f40-9ef6-012f-7bcc-00163e64d091";
-        
         if(signalurl == "notpresent") {
-
         	//need to launch pair activity
         	Intent goToNextActivity = new Intent(getApplicationContext(), Connect.class);
         	startActivity(goToNextActivity);
         	finish();
         }
-        
-        setContentView(R.layout.main);
-        
+        else {
+            Intent getSleepActivity = new Intent(getApplicationContext(), ZeoSleep.class);
+        	startActivity(getSleepActivity);
+        	finish();
+        }
+ 
+/*
         final ToggleButton button = (ToggleButton) findViewById(R.id.active_button);
         //set initial value
         button.setChecked(active);
@@ -49,25 +49,10 @@ public class LMFforAndroid extends Activity {
     			editor.putBoolean("LMF_active", button.isChecked());
     			editor.commit();
     			//update service state
-    			Toast.makeText(getApplicationContext(), "editor committed", Toast.LENGTH_SHORT).show();
-    			if (button.isChecked()){
-	    			startService(new Intent(LMFforAndroid.this, EventService.class));
-	    		} else {
-	    			stopService(new Intent(LMFforAndroid.this, EventService.class));
-	            }
+    			Toast.makeText(getApplicationContext(), "channel saved", Toast.LENGTH_SHORT).show();
             }
         });
-        //make sure service is started if at this point.
-		Toast.makeText(getApplicationContext(), "start service", Toast.LENGTH_SHORT).show();
-		
-        if(active){
-        	startService(new Intent(LMFforAndroid.this, EventService.class));
-        }
-       
-
-        Intent goToSleepActivity = new Intent(getApplicationContext(), ZeoSleep.class);
-    	startActivity(goToSleepActivity);
-    	//finish();
+*/
 
     }
     
